@@ -15,7 +15,10 @@ public class WatchListDaemon extends Daemon {
    @Override
    public void run() {
       try {
-         DaemonJob[] jobs = getJobs(getClass().getSimpleName() + ".cfg");
+         DaemonJob[] jobs = getJobs("conf\\daemon\\" + getClass().getSimpleName() + ".cfg");
+         if(jobs.length ==0) {
+            throw new Exception("No daemon jobs found!");
+         }
          executeJobs(jobs);
       }catch(Exception e) {
          System.out.println("ERROR IN DAEMON QUITTING");

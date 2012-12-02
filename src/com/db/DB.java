@@ -24,10 +24,7 @@ public class DB {
          DB db = new DB();
          Configuration configuration = new Configuration();
          configuration.configure(
-               new File(Properties.getProperty(Properties.HIBERNATE_PATH)))
-               
-               .setProperty("hibernate.show_sql", "false");
-
+               new File(Properties.getProperty(Properties.HIBERNATE_PATH))).setProperty("hibernate.show_sql", "false");
          ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
                .applySettings(configuration.getProperties())
                .buildServiceRegistry();

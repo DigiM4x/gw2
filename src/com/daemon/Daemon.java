@@ -33,7 +33,7 @@ public abstract class Daemon implements Runnable {
    
    protected MyScheduler pool;
    protected void executeJobs(DaemonJob[] ar) {
-      pool = new MyScheduler(1);
+      pool = new MyScheduler(3);
       for(DaemonJob a : ar) {
          pool.scheduleAtFixedRate(a, 0, a.getWait(), TimeUnit.MILLISECONDS);
       }

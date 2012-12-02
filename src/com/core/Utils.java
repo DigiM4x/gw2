@@ -40,6 +40,7 @@ public class Utils {
             }
          }
       }
+      System.out.println(url);
       return url;
    }
 

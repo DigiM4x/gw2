@@ -7,8 +7,7 @@ import com.db.DB;
 public abstract class DaemonJob implements Runnable{
    private int wait;
    
-   @Autowired
-   protected DB db;
+   protected DB db = DB.getDB();
    public DaemonJob() {
       
    }
