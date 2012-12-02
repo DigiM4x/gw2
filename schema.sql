@@ -1,0 +1,68 @@
+IF OBJECT_ID('BUY_ORDER_WATCH_LIST') IS NOT NULL BEGIN DROP TABLE BUY_ORDER_WATCH_LIST END
+IF OBJECT_ID('SELL_ORDER') IS NOT NULL BEGIN DROP TABLE SELL_ORDER END
+IF OBJECT_ID('BUY_ORDER') IS NOT NULL BEGIN DROP TABLE BUY_ORDER END
+IF OBJECT_ID('WATCH_LIST') IS NOT NULL BEGIN DROP TABLE WATCH_LIST END
+
+CREATE TABLE BUY_ORDER (
+	id INT PRIMARY KEY IDENTITY,
+	item_name VARCHAR(255) NOT NULL,
+	amount INT NOT NULL,
+	total INT NOT NULL,
+	price_per_item INT NOT NULL,
+	buy_date DATETIME NOT NULL,
+	item_id INT NOT NULL
+)
+CREATE INDEX BUY_ITEM_ID ON BUY_ORDER(item_id)
+
+
+CREATE TABLE SELL_ORDER (
+	id INT PRIMARY KEY IDENTITY,
+	item_name VARCHAR(255) NOT NULL,
+	amount INT NOT NULL,
+	total INT NOT NULL,
+	price_per_item INT NOT NULL,
+	sell_date DATETIME NOT NULL,
+	item_id INT NOT NULL,
+	ah_cut INT NOT NULL,
+	buy_order_id INT NOT NULL,
+	FOREIGN KEY(buy_order_id) REFERENCES BUY_ORDER(id)
+)
+CREATE INDEX SELL_ITEM_ID ON SELL_ORDER(item_id)
+
+CREATE TABLE WATCH_LIST (
+	id INT PRIMARY KEY IDENTITY,
+	item_name VARCHAR(255) NOT NULL,
+	amount INT NOT NULL,
+	item_id INT NOT NULL,
+	date_added DATETIME NOT NULL,
+	current_buy_price INT NOT NULL,
+	current_sell_price INT NOT NULL,
+	possible_profit INT,
+	watch_list_id INT,
+	last_updated DATETIME,
+	buy_price_change_last_hour INT,
+	sell_price_change_last_hour INT,
+	sell_available INT NOT NULL,
+	buy_available INT NOT NULL,
+)
+CREATE INDEX WATCH_ITEM_ID ON WATCH_LIST(item_id)
+
+CREATE TABLE BUY_ORDER_WATCH_LIST (
+	id INT PRIMARY KEY IDENTITY,
+	item_name VARCHAR(255) NOT NULL,
+	amount INT NOT NULL,
+	item_id INT NOT NULL,
+	current_buy_price INT NOT NULL,
+	current_sell_price INT NOT NULL,
+	buy_order_id INT not null,
+	last_updated DATETIME not null,
+	buy_change_since_order INT NOT NULL,
+	sell_change_since_order INT NOT NULL,
+	sell_available INT NOT NULL,
+	buy_available INT NOT NULL,
+	possible_profit INT,
+	FOREIGN KEY (buy_order_id) REFERENCES BUY_ORDER(id)
+)
+CREATE INDEX BUY_ORDER_WATCH_ITEM_ID ON BUY_ORDER_WATCH_LIST(item_id)
+CREATE INDEX BUY_ORDER_REQUEST_ID ON BUY_ORDER_WATCH_LIST(buy_order_id)
+
