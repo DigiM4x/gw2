@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.db.types.BuyOrderWatchList;
+import com.db.types.watchlist.BuyOrderWatchList;
 
 public class BuyOrderWatchListUpdaterJob extends DaemonJob{
 
@@ -14,7 +14,7 @@ public class BuyOrderWatchListUpdaterJob extends DaemonJob{
         " select * from buy_order_watch_list l inner join (select distinct item_id,MAX(last_updated) 'maxD' from buy_order_watch_list group by item_id) l2 " +
         "on l2.item_id = l.item_id and l.last_updated = l2.maxD";
    @Override
-   public void run() {
+   public void execute() {
       Session s = db.createSession();
       Transaction tr = s.beginTransaction();
       try {

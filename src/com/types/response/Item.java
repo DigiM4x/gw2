@@ -6,7 +6,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import com.db.types.WatchList;
+import com.db.types.watchlist.WatchList;
 import com.google.common.base.Function;
 
 public class Item {
@@ -117,26 +117,23 @@ public class Item {
       this.sale_availability = sale_availability;
    }
    
-   /*public static final Function<Item,WatchList> TO_WL = new Function<Item,WatchList>(){
-      
-      public WatchList apply(Item in) {
-         
-      }
-   };*/
+   
    public final WatchList toWatchList() {
       WatchList w = new WatchList();
       w.setAmount(1);
-      w.setCurrentBuyAmount(getMax_offer_unit_price());
-      w.setCurrentSellAmount(getMin_sale_unit_price());
-      w.setDateAdded(new Date());
+      w.setOfferAmount(getOffer_availability());
+      w.setSaleAmount(getSale_availability());
+      w.setRecordedDate(new Date());
+      w.setOfferPrice(getMax_offer_unit_price());
+      w.setSalePrice(getMin_sale_unit_price());
       w.setItemId(getData_id());
       w.setItemName(getName());
       w.setLastUpdated(new Date());
       w.setChangeBuyPriceHour(getOffer_price_change_last_hour());
       w.setChangeSellPriceHour(getSale_price_change_last_hour());
-      w.setSellAvailable(getSale_availability());
-      w.setBuyAvailable(getOffer_availability());
       return w;
    }
+   
+   
    
 }

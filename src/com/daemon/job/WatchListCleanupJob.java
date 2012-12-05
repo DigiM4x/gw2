@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.core.Utils;
 import com.db.DB;
-import com.db.types.WatchList;
+import com.db.types.watchlist.WatchList;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -20,7 +20,7 @@ import com.types.response.Item;
 
 public class WatchListCleanupJob extends DaemonJob{
    @Override
-   public void run() {
+   public void execute() {
      
    }
 

@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import com.core.Utils;
 import com.db.BuyOrderDAO;
 import com.db.types.BuyOrder;
-import com.db.types.WatchList;
+import com.db.types.watchlist.WatchList;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -38,7 +38,7 @@ public class WatchListUpdaterJob extends DaemonJob {
    }
 
    @Override
-   public void run() {
+   public void execute() {
       Session s = db.createSession();
       Transaction tr = s.beginTransaction();
       try {
@@ -61,17 +61,17 @@ public class WatchListUpdaterJob extends DaemonJob {
                WatchList w = new WatchList();
                WatchList prev = itemIds.get(in.getData_id());
                w.setAmount(1);
-               w.setCurrentBuyAmount(in.getMax_offer_unit_price());
-               w.setCurrentSellAmount(in.getMin_sale_unit_price());
-               w.setDateAdded(prev.getDateAdded());
+               w.setOfferPrice(in.getMax_offer_unit_price());
+               w.setSalePrice(in.getMin_sale_unit_price());
+               w.setRecordedDate(prev.getRecordedDate());
                w.setItemId(in.getData_id());
                w.setItemName(in.getName());
                w.setLastUpdated(new Date());
                w.setWatchListId( prev != null ? prev : null);
                w.setChangeBuyPriceHour(in.getOffer_price_change_last_hour());
                w.setChangeSellPriceHour(in.getSale_price_change_last_hour());
-               w.setSellAvailable(in.getSale_availability());
-               w.setBuyAvailable(in.getOffer_availability());
+               w.setSaleAmount(in.getSale_availability());
+               w.setOfferAmount(in.getOffer_availability());
                System.out.println("Updating " + w.getItemName());
                if(!buyOrderIds.contains(w.getItemId())) {
                   System.out.println("Submitting buy order for: " + w.getItemName());
@@ -80,7 +80,7 @@ public class WatchListUpdaterJob extends DaemonJob {
                   o.setBuyDate(new Date());
                   o.setItemId(w.getItemId());
                   o.setItemName(w.getItemName());
-                  o.setPricePerItem(w.getCurrentBuyAmount());
+                  o.setPricePerItem(w.getOfferPrice());
                   o.setTotal(o.getPricePerItem() * o.getAmount());
                   s.persist(o);
                }

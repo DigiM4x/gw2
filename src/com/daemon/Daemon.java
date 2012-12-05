@@ -15,6 +15,7 @@ import com.daemon.job.DaemonJob;
 public abstract class Daemon implements Runnable {
    
    protected DaemonJob[] getJobs(String fileName) throws Exception {
+      System.out.println("Reading " + fileName);
       List<DaemonJob> jobs = new ArrayList<DaemonJob>();
       Scanner scan = new Scanner(new File(fileName));
       while(scan.hasNextLine()) {

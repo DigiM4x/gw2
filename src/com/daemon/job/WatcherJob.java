@@ -18,7 +18,7 @@ import org.joda.time.Days;
 
 import com.core.Utils;
 import com.db.DB;
-import com.db.types.WatchList;
+import com.db.types.watchlist.WatchList;
 import com.types.APIRequest;
 import com.types.response.APIResponse;
 import com.types.response.Item;
@@ -58,7 +58,7 @@ public class WatcherJob extends DaemonJob {
    
 
    @Override
-   public void run() {
+   public void execute() {
       Item[] items = Utils.callAPI(
             new APIRequest(Arrays.asList("items", "all", "0"), params),APIResponse.class)
             .getResults();

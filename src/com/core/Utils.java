@@ -15,7 +15,6 @@ import com.types.APIRequest;
 import com.types.ItemAPIRequest;
 import com.types.response.APIResponse;
 import com.types.response.Item;
-import com.types.response.ItemAPIResponse;
 
 public class Utils {
    public static final String VERSION =  Properties.getProperty(Properties.VERSION);
@@ -40,7 +39,6 @@ public class Utils {
             }
          }
       }
-      System.out.println(url);
       return url;
    }
 
@@ -48,9 +46,9 @@ public class Utils {
       try {
 
          ObjectMapper map = new ObjectMapper();
-        ItemAPIResponse rs;
+         ItemAPIResponse rs;
          rs = map.readValue(getInputStream(r), ItemAPIResponse.class);
-         System.out.println(rs.getResult().getData_id());
+         //System.out.println(rs.getResult().getData_id());
          return rs.getResult();
       } catch (Exception e) {
          e.printStackTrace();
@@ -60,7 +58,6 @@ public class Utils {
    public static APIResponse callAPI(APIRequest r, Class cast) {
 
       try {
-
          ObjectMapper map = new ObjectMapper();
          APIResponse rs;
          rs = map.readValue(getInputStream(r), cast);
@@ -92,4 +89,23 @@ public class Utils {
       }
       return items;
    }
+   
+   private static class ItemAPIResponse{
+      
+      
+      private Item result;
+
+      public ItemAPIResponse(){}
+      
+      public Item getResult() {
+         return result;
+      }
+
+      public void setResult(Item result) {
+         this.result = result;
+      }
+      
+      
+   }
+
 }

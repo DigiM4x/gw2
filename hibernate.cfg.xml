@@ -11,11 +11,19 @@
 <property name="hibernate.connection.pool_size">10</property>
 <property name="show_sql">true</property>
 <property name="hibernate.current_session_context_class">thread</property>
-
+<property name="hibernate.hbm2ddl.auto">update</property>
 
 <mapping class="com.db.types.BuyOrder"/>
 <mapping class="com.db.types.SellOrder"/>
-<mapping class="com.db.types.WatchList"/>
-<mapping class="com.db.types.BuyOrderWatchList"/>
+<mapping class="com.db.types.BaseTable"/>
+<mapping class="com.db.types.WatchListTable"/>
+<mapping class="com.db.types.watchlist.WatchList"/>
+<mapping class="com.db.types.watchlist.BuyOrderWatchList"/>
+<mapping class="com.db.types.item.ItemTable"/>
+<mapping class="com.db.types.item.EctoItem"/>
+
+
+
+
 </session-factory>
 </hibernate-configuration>
